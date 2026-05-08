@@ -47,7 +47,7 @@
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="#contact" class="btn btn-primary rounded-pill px-4">צור קשר</a>
+                        <a href="#footer" class="btn btn-primary rounded-pill px-4">צור קשר</a>
                     </div>
                 </div>
             </div>
@@ -61,11 +61,13 @@
             <i class="bi bi-box2 floating-icon floating-1"></i>
             <i class="bi bi-check2-circle floating-icon floating-2"></i>
             <i class="bi bi-envelope-paper floating-icon floating-3"></i>
+            <i class="bi bi-person-check floating-icon floating-4"></i>
+            <i class="bi bi-megaphone floating-icon floating-5"></i>
+            <i class="bi bi-heart floating-icon floating-6"></i>
 
             <div class="container relative-z-index">
                 <div class="row align-items-center py-5">
-                    <div class="col-lg-6 mb-4 mb-lg-0 z-index-1">
-                        <!-- Removed the background box here, text is directly on the hero background -->
+                    <div class="col-lg-6 mb-4 mb-lg-0 z-index-1 ps-lg-5">
                         <h1 class="display-4 fw-bold mb-3 text-primary">מסבירים לילדים מהן בחירות</h1>
                         <p class="lead text-primary fw-medium mb-4">אתר חינוכי להורים שרוצים ללמד ילדים בצורה פשוטה, ניטרלית וחווייתית איך פועלת הדמוקרטיה, למה מצביעים, ואיך לכל אזרח יש השפעה.</p>
                         <p class="fs-5 text-primary opacity-75 mb-4">בחירות הן לא רק פעולה של מבוגרים — הן הזדמנות ללמד ילדים על אחריות, השפעה ושייכות.</p>
@@ -81,11 +83,11 @@
         </section>
 
         <!-- Content 1: Accessibility of Concepts -->
-        <section id="content-1" class="py-5 footer-bg min-vh-75 d-flex align-items-center">
-            <div class="container py-4">
+        <section id="content-1" class="bg-soft-blue min-vh-75 d-flex align-items-center section-padded">
+            <div class="container">
                 <div class="text-center mb-5">
-                    <h2 class="display-6 fw-bold mb-3 text-white">איך ננגיש לילדים את מושג הבחירות?</h2>
-                    <p class="lead text-white-50 w-75 mx-auto">הורים יכולים להסביר לילדים את תהליך הבחירות דרך כמה צעדים פשוטים, בלי להיכנס לפוליטיקה ובלי להעמיס מידע.</p>
+                    <h2 class="display-6 fw-bold mb-3 text-primary">איך ננגיש לילדים את מושג הבחירות?</h2>
+                    <p class="lead text-muted w-75 mx-auto">הורים יכולים להסביר לילדים את תהליך הבחירות דרך כמה צעדים פשוטים, בלי להיכנס לפוליטיקה ובלי להעמיס מידע.</p>
                 </div>
 
                 <div class="row g-4 justify-content-center">
@@ -168,11 +170,11 @@
         </section>
 
         <!-- Content 2: Interactive Game Placeholder -->
-        <section id="content-2" class="py-5 bg-white min-vh-75 d-flex align-items-center">
-            <div class="container py-4">
+        <section id="content-2" class="bg-white min-vh-75 d-flex align-items-center section-padded">
+            <div class="container">
                 <div class="text-center mb-5">
-                    <h2 class="display-6 fw-bold mb-3">מתרגלים בחירה בבית</h2>
-                    <p class="lead text-secondary w-75 mx-auto">משחק אינטראקטיבי משפחתי להדמיית תהליך ההצבעה</p>
+                    <h2 class="display-6 fw-bold mb-3 text-primary">מתרגלים בחירה בבית</h2>
+                    <p class="lead text-muted w-75 mx-auto">משחק אינטראקטיבי משפחתי להדמיית תהליך ההצבעה</p>
                 </div>
                 
                 <div class="game-placeholder-container rounded-4 shadow-sm p-5 text-center">
@@ -190,8 +192,8 @@
         </section>
 
         <!-- Content 3: Glossary -->
-        <section id="content-3" class="py-5 glossary-section min-vh-75 d-flex align-items-center">
-            <div class="container py-4">
+        <section id="content-3" class="bg-soft-blue min-vh-75 d-flex align-items-center section-padded">
+            <div class="container">
                 <div class="text-center mb-5">
                     <h2 class="display-6 fw-bold text-primary mb-3">מילים שחשוב להכיר</h2>
                 </div>
@@ -242,29 +244,37 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer-bg text-white py-5 min-vh-75 d-flex flex-column justify-content-center">
+    <footer id="footer" class="footer-bg text-white py-5 min-vh-75 d-flex flex-column justify-content-center">
         <div class="container py-4">
-            <div class="row g-4 align-items-start text-center">
-                <div class="col-12 mb-4">
-                    <h2 class="display-4 fw-bold text-white mb-0">Herocracy</h2>
+            <div class="row g-4 align-items-center">
+                <!-- Right column (first in RTL): Logo and Contact -->
+                <div class="col-md-6 text-center mb-4 mb-md-0">
+                    <div class="mb-4">
+                        <h2 class="display-4 fw-bold text-white mb-0">Herocracy</h2>
+                    </div>
+                    <div>
+                        <h3 class="h5 fw-bold text-white-50 mb-3">צור קשר</h3>
+                        <address class="mb-0">
+                            <a href="mailto:contact@herocracy.org" class="text-white-50 text-decoration-none fs-5 d-block mb-2 hover-white">contact@herocracy.org</a>
+                            <a href="tel:031234567" class="text-white-50 text-decoration-none fs-5 d-block hover-white">03-123-4567</a>
+                        </address>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <h3 class="h5 fw-bold text-white-50 mb-3">ניווט מהיר</h3>
-                    <ul class="nav flex-column justify-content-center align-items-center" aria-label="תפריט ניווט תחתון">
-                        <li class="nav-item mb-2"><a href="#home" class="nav-link text-white-50 p-0 fs-5 hover-white">בית</a></li>
-                        <li class="nav-item mb-2"><a href="#content-1" class="nav-link text-white-50 p-0 fs-5 hover-white">הנגשת מושגים</a></li>
-                        <li class="nav-item mb-2"><a href="#content-2" class="nav-link text-white-50 p-0 fs-5 hover-white">פעילות ביתית</a></li>
-                        <li class="nav-item mb-2"><a href="#content-3" class="nav-link text-white-50 p-0 fs-5 hover-white">מילון מושגים</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h3 class="h5 fw-bold text-white-50 mb-3">צור קשר</h3>
-                    <address class="mb-0">
-                        <a href="mailto:contact@herocracy.org" class="text-white-50 text-decoration-none fs-5 d-block mb-2 hover-white">contact@herocracy.org</a>
-                        <a href="tel:031234567" class="text-white-50 text-decoration-none fs-5 d-block hover-white">03-123-4567</a>
-                    </address>
+                
+                <!-- Left column (second in RTL): Navigation Links -->
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div class="text-center text-md-start">
+                        <h3 class="h5 fw-bold text-white-50 mb-3">ניווט מהיר</h3>
+                        <ul class="nav flex-column" aria-label="תפריט ניווט תחתון">
+                            <li class="nav-item mb-2"><a href="#home" class="nav-link text-white-50 p-0 fs-5 hover-white">בית</a></li>
+                            <li class="nav-item mb-2"><a href="#content-1" class="nav-link text-white-50 p-0 fs-5 hover-white">הנגשת מושגים</a></li>
+                            <li class="nav-item mb-2"><a href="#content-2" class="nav-link text-white-50 p-0 fs-5 hover-white">פעילות ביתית</a></li>
+                            <li class="nav-item mb-2"><a href="#content-3" class="nav-link text-white-50 p-0 fs-5 hover-white">מילון מושגים</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+            
             <hr class="my-5 border-secondary">
             <div class="text-center text-white-50">
                 &copy; 2026 Herocracy. כל הזכויות שמורות.
