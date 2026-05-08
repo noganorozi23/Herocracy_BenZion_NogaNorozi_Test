@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
     content: '';
     position: absolute;
     top: -5%;
-    left: -10%;
+    left: calc(-10% + 3px);
     width: 100%;
     height: 100%;
     border: 2px solid var(--primary-color);
@@ -134,10 +134,9 @@ h1, h2, h3, h4, h5, h6 {
     animation: float 6s ease-in-out infinite;
 }
 .floating-1 { top: 10%; right: 2%; animation-delay: 0s; }
-.floating-2 { top: 50%; left: 2%; animation-delay: 2s; }
+.floating-2 { top: calc(50% - 50px); left: 2%; animation-delay: 2s; }
 .floating-3 { bottom: 5%; right: 5%; animation-delay: 4s; }
-.floating-4 { top: 15%; left: 10%; animation-delay: 1s; }
-.floating-5 { bottom: 10%; left: 5%; animation-delay: 3s; }
+.floating-5 { bottom: calc(10% + 10px); left: calc(5% - 2px); animation-delay: 3s; }
 .floating-6 { top: 5%; right: 40%; animation-delay: 5s; }
 
 @keyframes float {
