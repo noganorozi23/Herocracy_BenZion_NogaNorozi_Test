@@ -174,8 +174,8 @@ h6 {
 }
 
 .floating-2 {
-    top: calc(50% - 100px);
-    left: 2%;
+    top: 15%; /* Moved much higher */
+    left: 4%;
     animation-delay: 2s;
 }
 
@@ -186,8 +186,8 @@ h6 {
 }
 
 .floating-5 {
-    bottom: calc(20% + 25px);
-    left: calc(5% - 4px);
+    bottom: 25%; /* Moved higher */
+    left: 2%; /* Moved further left */
     animation-delay: 3s;
 }
 
