@@ -8,9 +8,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Bootstrap RTL CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -21,10 +23,10 @@
         <nav class="navbar navbar-expand-lg navbar-light" aria-label="תפריט ניווט ראשי">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand text-primary fw-bold fs-3" href="#">Herocracy</a>
+                <a class="navbar-brand fw-bold fs-3" href="#">Herocracy</a>
                 
                 <!-- Hamburger menu for mobile -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="החלף מצב תפריט ניווט">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="החלף מצב תפריט ניווט">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -44,6 +46,9 @@
                             <a class="nav-link" href="#content-3">מילון מושגים</a>
                         </li>
                     </ul>
+                    <div class="d-flex">
+                        <a href="#contact" class="btn btn-primary rounded-pill px-4">צור קשר</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -51,20 +56,20 @@
 
     <main id="main-content">
         <!-- Hero Section -->
-        <section id="home" class="hero-section py-5 bg-light position-relative">
+        <section id="home" class="hero-section py-5 position-relative">
             <div class="container">
                 <div class="row align-items-center min-vh-75">
                     <div class="col-lg-6 mb-4 mb-lg-0 z-index-1">
-                        <h1 class="display-4 fw-bold text-dark mb-3">מסבירים לילדים מהן בחירות</h1>
+                        <h1 class="display-4 fw-bold mb-3">מסבירים לילדים מהן בחירות</h1>
                         <p class="lead text-secondary mb-4">אתר חינוכי להורים שרוצים ללמד ילדים בצורה פשוטה, ניטרלית וחווייתית איך פועלת הדמוקרטיה, למה מצביעים, ואיך לכל אזרח יש השפעה.</p>
                         <p class="fs-5 text-muted mb-4">בחירות הן לא רק פעולה של מבוגרים — הן הזדמנות ללמד ילדים על אחריות, השפעה ושייכות.</p>
-                        <a href="#content-1" class="btn btn-primary btn-lg rounded-pill px-4 py-2 cta-button">בואו נתחיל <span aria-hidden="true">&rarr;</span></a>
+                        <a href="#content-1" class="btn btn-primary btn-lg rounded-pill px-4 py-2 cta-button">בואו נתחיל <span aria-hidden="true">&larr;</span></a>
                     </div>
                     <div class="col-lg-6 z-index-1">
                         <!-- Hero Visual Placeholder -->
-                        <div class="hero-visual-placeholder rounded-4 shadow-lg overflow-hidden position-relative w-100 bg-white d-flex align-items-center justify-content-center text-center p-5">
+                        <div class="hero-visual-placeholder rounded-4 overflow-hidden position-relative w-100 d-flex align-items-center justify-content-center text-center p-5">
                             <div>
-                                <div class="display-1 text-primary mb-3" aria-hidden="true">🗳️</div>
+                                <i class="bi bi-people hero-icon d-block mb-3" aria-hidden="true"></i>
                                 <p class="text-muted fw-bold mb-0">אבא או אמא מחזיקים יד לילד בדרך לקלפי</p>
                             </div>
                         </div>
@@ -77,7 +82,7 @@
         <section id="content-1" class="py-5 bg-white">
             <div class="container py-4">
                 <div class="text-center mb-5">
-                    <h2 class="display-6 fw-bold text-primary mb-3">איך ננגיש לילדים את מושג הבחירות?</h2>
+                    <h2 class="display-6 fw-bold mb-3">איך ננגיש לילדים את מושג הבחירות?</h2>
                     <p class="lead text-secondary w-75 mx-auto">הורים יכולים להסביר לילדים את תהליך הבחירות דרך כמה צעדים פשוטים, בלי להיכנס לפוליטיקה ובלי להעמיס מידע.</p>
                 </div>
 
@@ -86,11 +91,11 @@
                     <div class="col-sm-6 col-lg-4 col-xl-2">
                         <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="מהי בחירה? לחץ כדי לראות את ההסבר.">
                             <div class="flip-card-inner">
-                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center bg-primary-subtle rounded-4 p-4 shadow-sm">
-                                    <div class="fs-1 mb-2" aria-hidden="true">🤔</div>
+                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center rounded-4 p-4">
+                                    <i class="bi bi-question-circle flip-icon mb-2" aria-hidden="true"></i>
                                     <h3 class="h5 fw-bold text-center m-0">מהי בחירה?</h3>
                                 </div>
-                                <div class="flip-card-back bg-primary text-white rounded-4 p-4 shadow-sm d-flex align-items-center justify-content-center text-center">
+                                <div class="flip-card-back rounded-4 p-4 d-flex align-items-center justify-content-center text-center">
                                     <p class="m-0 small">הסבירו לילד שבחירה היא החלטה בין כמה אפשרויות. אפשר להתחיל מדוגמאות מהיום־יום, כמו בחירת משחק, בגד או ארוחת ערב.</p>
                                 </div>
                             </div>
@@ -101,11 +106,11 @@
                     <div class="col-sm-6 col-lg-4 col-xl-2">
                         <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="מהי הצבעה? לחץ כדי לראות את ההסבר.">
                             <div class="flip-card-inner">
-                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center bg-success-subtle rounded-4 p-4 shadow-sm">
-                                    <div class="fs-1 mb-2" aria-hidden="true">✋</div>
+                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center rounded-4 p-4">
+                                    <i class="bi bi-hand-index-thumb flip-icon mb-2" aria-hidden="true"></i>
                                     <h3 class="h5 fw-bold text-center m-0">מהי הצבעה?</h3>
                                 </div>
-                                <div class="flip-card-back bg-success text-white rounded-4 p-4 shadow-sm d-flex align-items-center justify-content-center text-center">
+                                <div class="flip-card-back rounded-4 p-4 d-flex align-items-center justify-content-center text-center">
                                     <p class="m-0 small">הסבירו שהצבעה היא דרך שבה כל אדם מביע את דעתו בצורה מסודרת ושווה.</p>
                                 </div>
                             </div>
@@ -116,11 +121,11 @@
                     <div class="col-sm-6 col-lg-4 col-xl-2">
                         <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="מהי קלפי? לחץ כדי לראות את ההסבר.">
                             <div class="flip-card-inner">
-                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center bg-info-subtle rounded-4 p-4 shadow-sm">
-                                    <div class="fs-1 mb-2" aria-hidden="true">📦</div>
+                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center rounded-4 p-4">
+                                    <i class="bi bi-box flip-icon mb-2" aria-hidden="true"></i>
                                     <h3 class="h5 fw-bold text-center m-0">מהי קלפי?</h3>
                                 </div>
-                                <div class="flip-card-back bg-info text-white rounded-4 p-4 shadow-sm d-flex align-items-center justify-content-center text-center">
+                                <div class="flip-card-back rounded-4 p-4 d-flex align-items-center justify-content-center text-center">
                                     <p class="m-0 small">הקלפי היא המקום שבו אזרחים מצביעים. אפשר להסביר שזה כמו “קופסה של החלטות”, שבה כל קול נספר.</p>
                                 </div>
                             </div>
@@ -131,11 +136,11 @@
                     <div class="col-sm-6 col-lg-4 col-xl-2">
                         <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="מי הם מנהיגים? לחץ כדי לראות את ההסבר.">
                             <div class="flip-card-inner">
-                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center bg-warning-subtle rounded-4 p-4 shadow-sm">
-                                    <div class="fs-1 mb-2" aria-hidden="true">👑</div>
+                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center rounded-4 p-4">
+                                    <i class="bi bi-star flip-icon mb-2" aria-hidden="true"></i>
                                     <h3 class="h5 fw-bold text-center m-0">מי הם מנהיגים?</h3>
                                 </div>
-                                <div class="flip-card-back bg-warning text-dark rounded-4 p-4 shadow-sm d-flex align-items-center justify-content-center text-center">
+                                <div class="flip-card-back rounded-4 p-4 d-flex align-items-center justify-content-center text-center">
                                     <p class="m-0 small">מנהיגים הם אנשים שנבחרים כדי לקבל החלטות עבור הציבור. מסבירים שהם מתחלפים לפי רצון האזרחים.</p>
                                 </div>
                             </div>
@@ -146,11 +151,11 @@
                     <div class="col-sm-6 col-lg-4 col-xl-2">
                         <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="למה הקול שלנו חשוב? לחץ כדי לראות את ההסבר.">
                             <div class="flip-card-inner">
-                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center bg-danger-subtle rounded-4 p-4 shadow-sm">
-                                    <div class="fs-1 mb-2" aria-hidden="true">🗣️</div>
+                                <div class="flip-card-front d-flex flex-column align-items-center justify-content-center rounded-4 p-4">
+                                    <i class="bi bi-megaphone flip-icon mb-2" aria-hidden="true"></i>
                                     <h3 class="h5 fw-bold text-center m-0">למה הקול שלנו חשוב?</h3>
                                 </div>
-                                <div class="flip-card-back bg-danger text-white rounded-4 p-4 shadow-sm d-flex align-items-center justify-content-center text-center">
+                                <div class="flip-card-back rounded-4 p-4 d-flex align-items-center justify-content-center text-center">
                                     <p class="m-0 small">כל הצבעה היא דרך להשפיע. גם אם אנחנו רק אדם אחד, הקול שלנו הוא חלק מהחלטה גדולה של הרבה אנשים.</p>
                                 </div>
                             </div>
@@ -161,14 +166,14 @@
         </section>
 
         <!-- Content 2: Interactive Game Placeholder -->
-        <section id="content-2" class="py-5 bg-light">
+        <section id="content-2" class="py-5 bg-white">
             <div class="container py-4">
                 <div class="text-center mb-5">
-                    <h2 class="display-6 fw-bold text-primary mb-3">מתרגלים בחירה בבית</h2>
+                    <h2 class="display-6 fw-bold mb-3">מתרגלים בחירה בבית</h2>
                     <p class="lead text-secondary w-75 mx-auto">משחק אינטראקטיבי משפחתי להדמיית תהליך ההצבעה</p>
                 </div>
                 
-                <div class="game-placeholder-container rounded-4 shadow-sm bg-white p-5 text-center border border-2 border-primary border-opacity-25 border-dashed">
+                <div class="game-placeholder-container rounded-4 shadow-sm p-5 text-center">
                     <div class="my-5">
                         <div class="spinner-border text-primary mb-3" role="status" aria-hidden="true">
                             <span class="visually-hidden">טוען משחק...</span>
@@ -183,50 +188,50 @@
         </section>
 
         <!-- Content 3: Glossary -->
-        <section id="content-3" class="py-5 custom-bg-gradient">
+        <section id="content-3" class="py-5 glossary-section">
             <div class="container py-4">
                 <div class="text-center mb-5">
-                    <h2 class="display-6 fw-bold text-white mb-3">מילים שחשוב להכיר</h2>
+                    <h2 class="display-6 fw-bold text-primary mb-3">מילים שחשוב להכיר</h2>
                 </div>
 
                 <div class="row g-4 justify-content-center" role="list">
                     <!-- Glossary Card 1 -->
                     <div class="col-md-6 col-lg-4" role="listitem">
-                        <div class="glossary-card h-100 p-4 rounded-4 shadow">
-                            <h3 class="h4 fw-bold text-primary mb-2">דמוקרטיה</h3>
-                            <p class="m-0 text-dark">שיטה שבה האזרחים משפיעים על קבלת ההחלטות במדינה.</p>
+                        <div class="glossary-card h-100 p-4 rounded-4 shadow-sm">
+                            <h3 class="h4 fw-bold mb-2">דמוקרטיה</h3>
+                            <p class="m-0">שיטה שבה האזרחים משפיעים על קבלת ההחלטות במדינה.</p>
                         </div>
                     </div>
                     
                     <!-- Glossary Card 2 -->
                     <div class="col-md-6 col-lg-4" role="listitem">
-                        <div class="glossary-card h-100 p-4 rounded-4 shadow">
-                            <h3 class="h4 fw-bold text-primary mb-2">קלפי</h3>
-                            <p class="m-0 text-dark">המקום שבו מצביעים בבחירות.</p>
+                        <div class="glossary-card h-100 p-4 rounded-4 shadow-sm">
+                            <h3 class="h4 fw-bold mb-2">קלפי</h3>
+                            <p class="m-0">המקום שבו מצביעים בבחירות.</p>
                         </div>
                     </div>
 
                     <!-- Glossary Card 3 -->
                     <div class="col-md-6 col-lg-4" role="listitem">
-                        <div class="glossary-card h-100 p-4 rounded-4 shadow">
-                            <h3 class="h4 fw-bold text-primary mb-2">פתק הצבעה</h3>
-                            <p class="m-0 text-dark">הפתק שאותו שמים במעטפה כדי לבחור.</p>
+                        <div class="glossary-card h-100 p-4 rounded-4 shadow-sm">
+                            <h3 class="h4 fw-bold mb-2">פתק הצבעה</h3>
+                            <p class="m-0">הפתק שאותו שמים במעטפה כדי לבחור.</p>
                         </div>
                     </div>
 
                     <!-- Glossary Card 4 -->
                     <div class="col-md-6 col-lg-4" role="listitem">
-                        <div class="glossary-card h-100 p-4 rounded-4 shadow">
-                            <h3 class="h4 fw-bold text-primary mb-2">אזרח</h3>
-                            <p class="m-0 text-dark">אדם שחי במדינה ויש לו זכויות וחובות.</p>
+                        <div class="glossary-card h-100 p-4 rounded-4 shadow-sm">
+                            <h3 class="h4 fw-bold mb-2">אזרח</h3>
+                            <p class="m-0">אדם שחי במדינה ויש לו זכויות וחובות.</p>
                         </div>
                     </div>
 
                     <!-- Glossary Card 5 -->
                     <div class="col-md-6 col-lg-4" role="listitem">
-                        <div class="glossary-card h-100 p-4 rounded-4 shadow">
-                            <h3 class="h4 fw-bold text-primary mb-2">מנהיגות</h3>
-                            <p class="m-0 text-dark">אנשים שנבחרים להוביל ולקבל החלטות עבור הציבור.</p>
+                        <div class="glossary-card h-100 p-4 rounded-4 shadow-sm">
+                            <h3 class="h4 fw-bold mb-2">מנהיגות</h3>
+                            <p class="m-0">אנשים שנבחרים להוביל ולקבל החלטות עבור הציבור.</p>
                         </div>
                     </div>
                 </div>
@@ -235,7 +240,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
+    <footer class="footer-bg text-white py-5">
         <div class="container">
             <div class="row g-4 align-items-center">
                 <div class="col-md-4 text-center text-md-start">
@@ -244,9 +249,9 @@
                 <div class="col-md-4">
                     <ul class="nav flex-column flex-md-row justify-content-center" aria-label="תפריט ניווט תחתון">
                         <li class="nav-item"><a href="#home" class="nav-link text-white-50 px-2">בית</a></li>
-                        <li class="nav-item"><a href="#content-1" class="nav-link text-white-50 px-2">תוכן 1</a></li>
-                        <li class="nav-item"><a href="#content-2" class="nav-link text-white-50 px-2">תוכן 2</a></li>
-                        <li class="nav-item"><a href="#content-3" class="nav-link text-white-50 px-2">תוכן 3</a></li>
+                        <li class="nav-item"><a href="#content-1" class="nav-link text-white-50 px-2">הנגשת מושגים</a></li>
+                        <li class="nav-item"><a href="#content-2" class="nav-link text-white-50 px-2">פעילות ביתית</a></li>
+                        <li class="nav-item"><a href="#content-3" class="nav-link text-white-50 px-2">מילון מושגים</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 text-center text-md-end">

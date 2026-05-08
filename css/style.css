@@ -2,20 +2,22 @@
    CSS Variables
    ========================================================================== */
 :root {
-    --primary-color: #2b55cc;
-    --primary-light: #e6edff;
-    --secondary-color: #fca311;
-    --text-dark: #1e1e24;
-    --text-muted: #6c757d;
-    --bg-light: #f8f9fa;
+    --primary-color: #1a429b; /* Deep blue from the button/text */
+    --primary-hover: #143580;
+    --primary-light: #eef4fb; /* Light blue background */
+    --secondary-color: #3b82f6; /* Lighter blue accent */
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --bg-light: #f8fafc;
     --bg-white: #ffffff;
+    --footer-bg: #1e293b;
     
     --font-family: 'Heebo', system-ui, -apple-system, sans-serif;
     
     --transition-speed: 0.3s;
-    --box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    --box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    --box-shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    --box-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* ==========================================================================
@@ -31,19 +33,24 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+    font-weight: 800;
+    color: var(--primary-color);
 }
 
-/* Override Bootstrap Primary color slightly */
+/* Custom Utilities */
 .text-primary { color: var(--primary-color) !important; }
 .bg-primary { background-color: var(--primary-color) !important; }
+.bg-primary-light { background-color: var(--primary-light) !important; }
+.text-muted { color: var(--text-muted) !important; }
+
 .btn-primary { 
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+    font-weight: 600;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background-color: #214099 !important;
-    border-color: #214099 !important;
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
 }
 
 /* Accessibility - Focus Rings */
@@ -56,16 +63,36 @@ h1, h2, h3, h4, h5, h6 {
    Components
    ========================================================================== */
 
+/* Navbar */
+.navbar-brand {
+    color: var(--primary-color) !important;
+}
+.nav-link {
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color var(--transition-speed);
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
 /* Hero Section */
 .hero-section {
     position: relative;
     overflow: hidden;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e2eafc 100%);
 }
 
 .hero-visual-placeholder {
     height: 400px;
-    background: linear-gradient(135deg, #f0f4ff 0%, #d9e2ff 100%);
-    border: 1px solid rgba(43, 85, 204, 0.1);
+    background-color: var(--bg-white);
+    border: 1px solid rgba(26, 66, 155, 0.1);
+    box-shadow: var(--box-shadow-lg);
+}
+
+.hero-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
 }
 
 .cta-button {
@@ -93,12 +120,15 @@ h1, h2, h3, h4, h5, h6 {
     transition: transform 0.6s;
     transform-style: preserve-3d;
     border-radius: 1rem;
+    box-shadow: var(--box-shadow-sm);
 }
 
-/* Hover OR Focus OR active state (triggered via JS for keyboard accessibility) */
+/* Hover OR Focus OR active state */
 .flip-card:hover .flip-card-inner,
+.flip-card:focus-within .flip-card-inner,
 .flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
+    box-shadow: var(--box-shadow-lg);
 }
 
 .flip-card-front, .flip-card-back {
@@ -111,11 +141,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .flip-card-front {
-    color: var(--text-dark);
+    color: var(--primary-color);
+    background-color: var(--bg-white);
+    border: 1px solid rgba(26, 66, 155, 0.1);
 }
 
 .flip-card-back {
     transform: rotateY(180deg);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    color: var(--bg-white);
+}
+
+.flip-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+.flip-card-back p {
+    color: var(--bg-white);
 }
 
 /* Game Placeholder (Content 2) */
@@ -124,35 +166,48 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: repeating-linear-gradient(
-        45deg,
-        #f8f9fa,
-        #f8f9fa 10px,
-        #ffffff 10px,
-        #ffffff 20px
-    );
-}
-
-.border-dashed {
-    border-style: dashed !important;
+    background-color: var(--primary-light);
+    border: none !important;
 }
 
 /* Glossary Cards (Content 3) */
-.custom-bg-gradient {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #173280 100%);
+.glossary-section {
+    background-color: var(--bg-white);
+    position: relative;
+}
+.glossary-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top right, var(--primary-light), transparent 60%);
+    opacity: 0.5;
+    z-index: 0;
+}
+.glossary-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 .glossary-card {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: linear-gradient(135deg, #1a429b 0%, #3b82f6 100%);
+    border: none;
     transition: transform var(--transition-speed);
+}
+.glossary-card h3 {
+    color: var(--bg-white) !important;
+}
+.glossary-card p {
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .glossary-card:hover, .glossary-card:focus-within {
     transform: translateY(-5px);
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow-lg);
+}
+
+/* Footer */
+.footer-bg {
+    background-color: var(--footer-bg);
 }
 
 /* ==========================================================================
