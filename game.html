@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>דמוקרטיה בבית - משחק רב משתתפים</title>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+
     <style>
         :root {
             --primary: #4f46e5;
@@ -28,11 +26,12 @@
             align-items: center;
             min-height: 100vh;
             padding: 10px;
+            box-sizing: border-box;
         }
 
         #game-container {
             background: var(--card-bg);
-            max-width: 500px;
+            max-width: 900px;
             width: 100%;
             border-radius: 24px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -246,30 +245,17 @@
             <!-- מסך 1: כניסה -->
             <div id="screen-login" class="screen active">
                 <h3>ברוכים הבאים למשחק הבחירות!</h3>
-                <p>איך קוראים לכם?</p>
-                <input type="text" id="input-name" placeholder="השם שלכם">
-                <button class="btn" id="btn-login" onclick="handleLogin()">המשך</button>
+                <p>הכניסו את השמות שלכם (2 שחקנים):</p>
+                <input type="text" id="input-p1" placeholder="שם שחקן 1 (למשל אבא)">
+                <input type="text" id="input-p2" placeholder="שם שחקן 2 (למשל דנה)">
+                <button class="btn" id="btn-login" onclick="startGame()">בואו נתחיל!</button>
+                <div id="login-error" class="error-msg"></div>
             </div>
 
-            <!-- מסך 2: לובי -->
-            <div id="screen-lobby" class="screen">
-                <h3>היי <span id="span-user-name"></span>!</h3>
-                <button id="btn-create-room" class="btn" onclick="createRoom()">צור חדר חדש</button>
-                <div style="margin: 20px 0; border-top: 1px solid #ddd; padding-top: 20px;">
-                    <p>או הכנס קוד חדר שקיבלת:</p>
-                    <input type="number" id="input-room-id" placeholder="קוד חדר (4 ספרות)">
-                    <button id="btn-join-room" class="btn btn-secondary" onclick="joinRoom()">הצטרף לחדר</button>
-                    <div id="lobby-error" class="error-msg"></div>
-                </div>
-            </div>
-
-            <!-- מסך 3: המשחק -->
+            <!-- מסך 2: תור -->
             <div id="screen-game" class="screen">
-                <div class="room-code-badge">חדר: <span id="span-room-id"></span></div>
-                <button class="btn-outline" onclick="copyRoomCode()">העתק קוד 📋</button>
-
-                <div class="participants" id="div-participants"></div>
-
+                <div class="room-code-badge" id="turn-badge">תור: <span id="span-turn-name"></span></div>
+                
                 <h3 id="h3-question">טוען שאלה...</h3>
 
                 <div class="kalpi-area" id="kalpi-area">
@@ -280,18 +266,22 @@
                     <!-- יתמלא ע"י JS -->
                 </div>
 
-                <button class="btn" id="btn-vote" disabled onclick="submitVote()">אני מצביע/ה!</button>
-                <div id="div-waiting" style="display:none; color: var(--primary); font-weight:bold; margin-top:10px;">
-                    ממתינים לשאר המצביעים... ⏳
-                </div>
+                <button class="btn" id="btn-vote" disabled onclick="submitVote()">הצבעתי! ✔️</button>
+            </div>
+
+            <!-- מסך 3: העברת תור -->
+            <div id="screen-pass" class="screen">
+                <span style="font-size: 60px;">🙈</span>
+                <h3>ההצבעה נקלטה בחשאי!</h3>
+                <p id="p-pass-msg">העבירו את השליטה לשחקן הבא כדי שיוכל להצביע בלי שתראו.</p>
+                <button class="btn" onclick="nextTurn()">אני מוכן, בואו נמשיך</button>
             </div>
 
             <!-- מסך 4: תוצאות -->
             <div id="screen-results" class="screen">
                 <h3 id="h3-winner-msg">התוצאות הגיעו!</h3>
-                <div id="div-results-bars"></div>
-                <button class="btn" id="btn-next" style="display:none;" onclick="advanceRound()">לשלב הבא</button>
-                <p id="p-waiting-next" style="margin-top:15px; color:#666;">ממתינים למנהל החדר שימשיך...</p>
+                <div id="div-results-bars" style="text-align: right;"></div>
+                <button class="btn" id="btn-next" onclick="advanceRound()" style="margin-top:20px;">לשאלה הבאה</button>
             </div>
 
             <!-- מסך 5: סיום -->
@@ -305,13 +295,6 @@
     </div>
 
     <script>
-        // Robust App ID detection
-        const appId = (typeof __app_id !== 'undefined' && __app_id) ? __app_id : 'democracy-game-shared';
-        const firebaseConfig = JSON.parse(__firebase_config);
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-
         const scenarios = [
             { q: "מה נאכל היום לארוחת ערב?", options: [{ id: 'a', label: "פיצה", icon: "🍕" }, { id: 'b', label: "סלט", icon: "🥗" }] },
             { q: "לאן נצא לטייל בשבת?", options: [{ id: 'a', label: "פארק שעשועים", icon: "🎡" }, { id: 'b', label: "טיול בטבע", icon: "🌳" }] },
@@ -319,156 +302,49 @@
         ];
 
         let state = {
-            name: "",
-            uid: "",
-            roomId: "",
-            round: -1,
+            p1: "",
+            p2: "",
+            round: 0,
+            currentTurn: 1, // 1 or 2
             selectedId: null,
-            voted: false,
-            isAdmin: false,
-            processedVotes: new Set()
+            votes: { 1: null, 2: null }
         };
 
-        async function handleLogin() {
-            state.name = document.getElementById('input-name').value.trim();
-            if (!state.name) return;
+        function startGame() {
+            const p1 = document.getElementById('input-p1').value.trim();
+            const p2 = document.getElementById('input-p2').value.trim();
+            const errorDiv = document.getElementById('login-error');
 
-            const loginBtn = document.getElementById('btn-login');
-            loginBtn.disabled = true;
-            loginBtn.innerText = "מתחבר...";
-
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await auth.signInWithCustomToken(__initial_auth_token);
-                } else {
-                    await auth.signInAnonymously();
-                }
-                state.uid = auth.currentUser.uid;
-                document.getElementById('span-user-name').innerText = state.name;
-                showScreen('screen-lobby');
-            } catch (e) {
-                console.error(e);
-                loginBtn.disabled = false;
-                loginBtn.innerText = "המשך";
+            if (!p1 || !p2) {
+                errorDiv.innerText = "נא להזין את שני השמות.";
+                return;
             }
-        }
-
-        async function createRoom() {
-            const id = Math.floor(1000 + Math.random() * 9000).toString();
-            const createBtn = document.getElementById('btn-create-room');
-            createBtn.disabled = true;
-            createBtn.innerText = "יוצר חדר...";
-
-            const roomRef = db.doc(`artifacts/${appId}/public/data/rooms/${id}`);
-            state.isAdmin = true;
-
-            try {
-                await roomRef.set({
-                    round: 0,
-                    adminId: state.uid,
-                    participants: { [state.uid]: state.name },
-                    votes: {}, // מפה ריקה של הצבעות
-                    lastUpdate: Date.now()
-                });
-                enterRoom(id);
-            } catch (e) {
-                console.error(e);
-                createBtn.disabled = false;
-                createBtn.innerText = "צור חדר חדש";
-            }
-        }
-
-        async function joinRoom() {
-            const idInput = document.getElementById('input-room-id');
-            const id = idInput.value.trim();
-            if (!id) return;
-
-            const joinBtn = document.getElementById('btn-join-room');
-            const errorDiv = document.getElementById('lobby-error');
-
-            joinBtn.disabled = true;
-            joinBtn.innerText = "מחפש חדר...";
             errorDiv.innerText = "";
 
-            const roomRef = db.doc(`artifacts/${appId}/public/data/rooms/${id}`);
-            try {
-                const snap = await roomRef.get();
-                if (snap.exists) {
-                    await roomRef.update({
-                        [`participants.${state.uid}`]: state.name
-                    });
-                    state.isAdmin = false;
-                    enterRoom(id);
-                } else {
-                    errorDiv.innerText = "החדר לא נמצא. וודאו שהקוד נכון.";
-                    joinBtn.disabled = false;
-                    joinBtn.innerText = "הצטרף לחדר";
-                }
-            } catch (e) {
-                console.error(e);
-                errorDiv.innerText = "שגיאה בחיבור לחדר.";
-                joinBtn.disabled = false;
-                joinBtn.innerText = "הצטרף לחדר";
-            }
+            state.p1 = p1;
+            state.p2 = p2;
+            state.round = 0;
+            state.currentTurn = 1;
+            state.votes = { 1: null, 2: null };
+
+            startRound();
         }
 
-        function enterRoom(id) {
-            state.roomId = id;
-            document.getElementById('span-room-id').innerText = id;
-            showScreen('screen-game');
-            startListener();
+        function startRound() {
+            state.currentTurn = 1;
+            state.votes = { 1: null, 2: null };
+            state.selectedId = null;
+            renderTurn();
         }
 
-        function startListener() {
-            if (!state.roomId) return;
-            db.doc(`artifacts/${appId}/public/data/rooms/${state.roomId}`).onSnapshot(doc => {
-                const data = doc.data();
-                if (!data) return;
-
-                updateParticipantsUI(data);
-
-                if (data.round !== state.round) {
-                    state.round = data.round;
-                    state.voted = false;
-                    state.selectedId = null;
-                    state.processedVotes.clear();
-
-                    if (state.round < scenarios.length) {
-                        renderRound();
-                        showScreen('screen-game');
-                    } else {
-                        showScreen('screen-finish');
-                    }
-                }
-
-                syncVotes(data.votes);
-                checkVotingProgress(data);
-            }, error => {
-                console.error("Snapshot error:", error);
-            });
-        }
-
-        function updateParticipantsUI(data) {
-            const container = document.getElementById('div-participants');
-            container.innerHTML = "";
-            const participants = data.participants || {};
-            const votes = data.votes || {};
-
-            Object.keys(participants).forEach(uid => {
-                // בדיקה האם המשתמש הצביע בסיבוב הנוכחי
-                const hasVotedThisRound = votes[uid] && votes[uid].round === state.round;
-                const tag = document.createElement('div');
-                tag.className = `tag ${hasVotedThisRound ? 'ready' : ''}`;
-                tag.innerText = participants[uid] + (hasVotedThisRound ? " ✅" : "");
-                container.appendChild(tag);
-            });
-        }
-
-        function renderRound() {
+        function renderTurn() {
             const scene = scenarios[state.round];
             if (!scene) return;
 
+            const playerName = state.currentTurn === 1 ? state.p1 : state.p2;
+            document.getElementById('span-turn-name').innerText = playerName;
             document.getElementById('h3-question').innerText = scene.q;
+
             const container = document.getElementById('div-options');
             container.innerHTML = "";
 
@@ -478,7 +354,6 @@
                 div.id = `opt-${opt.id}`;
                 div.innerHTML = `<span class="opt-icon">${opt.icon}</span><strong>${opt.label}</strong>`;
                 div.onclick = () => {
-                    if (state.voted) return;
                     state.selectedId = opt.id;
                     document.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
                     div.classList.add('selected');
@@ -487,35 +362,40 @@
                 container.appendChild(div);
             });
 
-            document.getElementById('btn-vote').style.display = "block";
             document.getElementById('btn-vote').disabled = true;
-            document.getElementById('div-waiting').style.display = "none";
+            showScreen('screen-game');
         }
 
-        async function submitVote() {
-            if (!state.selectedId || state.voted) return;
-            state.voted = true;
-            document.getElementById('btn-vote').style.display = "none";
-            document.getElementById('div-waiting').style.display = "block";
+        function submitVote() {
+            if (!state.selectedId) return;
+            
+            // לשמור את ההצבעה
+            state.votes[state.currentTurn] = state.selectedId;
 
-            const roomRef = db.doc(`artifacts/${appId}/public/data/rooms/${state.roomId}`);
-            await roomRef.update({
-                [`votes.${state.uid}`]: { choice: state.selectedId, round: state.round }
-            });
-        }
+            // אנימציה קטנה
+            const scene = scenarios[state.round];
+            const opt = scene.options.find(o => o.id === state.selectedId);
+            if (opt) animateToKalpi(opt.icon);
 
-        function syncVotes(votes) {
-            if (!votes) return;
-            Object.entries(votes).forEach(([uid, vote]) => {
-                if (vote.round === state.round && !state.processedVotes.has(uid)) {
-                    state.processedVotes.add(uid);
-                    const scene = scenarios[state.round];
-                    if (scene) {
-                        const opt = scene.options.find(o => o.id === vote.choice);
-                        if (opt) animateToKalpi(opt.icon);
-                    }
+            document.getElementById('btn-vote').disabled = true;
+
+            // להמתין שהאנימציה תסתיים (כ-1 שניה) ואז להמשיך
+            setTimeout(() => {
+                if (state.currentTurn === 1) {
+                    // לעבור לשחקן 2
+                    state.currentTurn = 2;
+                    state.selectedId = null;
+                    document.getElementById('p-pass-msg').innerText = `העבירו את השליטה ל-${state.p2} כדי שיוכל להצביע בלי שתראו.`;
+                    showScreen('screen-pass');
+                } else {
+                    // סיימנו להצביע
+                    showResults();
                 }
-            });
+            }, 1000);
+        }
+
+        function nextTurn() {
+            renderTurn();
         }
 
         function animateToKalpi(icon) {
@@ -536,83 +416,61 @@
             setTimeout(() => item.remove(), 1000);
         }
 
-        function checkVotingProgress(data) {
-            const participants = data.participants || {};
-            const pCount = Object.keys(participants).length;
-            const currentVotes = Object.values(data.votes || {}).filter(v => v.round === state.round);
-
-            if (currentVotes.length > 0 && currentVotes.length === pCount) {
-                showResults(currentVotes, data);
-            }
-        }
-
-        function showResults(votes, data) {
-            showScreen('screen-results');
-            const counts = { a: 0, b: 0 };
-            votes.forEach(v => counts[v.choice]++);
-
+        function showResults() {
             const scene = scenarios[state.round];
+            const v1 = state.votes[1];
+            const v2 = state.votes[2];
+            
+            const opt1 = scene.options.find(o => o.id === v1);
+            const opt2 = scene.options.find(o => o.id === v2);
+
+            let title = "";
+            if (v1 === v2) {
+                title = `הסכמה פה אחד! כולם בחרו: ${opt1.label} ${opt1.icon}`;
+            } else {
+                title = "תיקו! כל אחד בחר משהו אחר 🤝";
+            }
+            
+            document.getElementById('h3-winner-msg').innerText = title;
+
             const container = document.getElementById('div-results-bars');
-            container.innerHTML = "";
-
-            const winner = counts.a >= counts.b ? scene.options[0] : scene.options[1];
-            document.getElementById('h3-winner-msg').innerText = `הרוב קבע: ${winner.label} ${winner.icon}`;
-
-            scene.options.forEach(opt => {
-                const count = counts[opt.id];
-                const total = votes.length || 1;
-                const perc = (count / total) * 100;
-                container.innerHTML += `
-                <div class="result-row">
-                    <strong>${opt.label} (${count})</strong>
-                    <div class="bar-bg"><div class="bar-fill" style="width: ${perc}%"></div></div>
+            container.innerHTML = `
+                <div style="margin-top: 15px; font-size: 18px; padding: 15px; background: #eef2ff; border-radius: 10px; border: 2px solid var(--primary);">
+                    <strong>${state.p1}</strong> הצביע/ה ל: ${opt1.icon} ${opt1.label}
+                </div>
+                <div style="margin-top: 15px; font-size: 18px; padding: 15px; background: #fffbeb; border-radius: 10px; border: 2px solid var(--secondary);">
+                    <strong>${state.p2}</strong> הצביע/ה ל: ${opt2.icon} ${opt2.label}
                 </div>
             `;
-            });
 
-            if (state.isAdmin) {
-                document.getElementById('btn-next').style.display = "block";
-                document.getElementById('p-waiting-next').style.display = "none";
+            // לבדוק אם יש עוד סיבובים
+            if (state.round >= scenarios.length - 1) {
+                document.getElementById('btn-next').innerText = "סיים משחק";
             } else {
-                document.getElementById('btn-next').style.display = "none";
-                document.getElementById('p-waiting-next').style.display = "block";
+                document.getElementById('btn-next').innerText = "לשאלה הבאה";
             }
+
+            showScreen('screen-results');
         }
 
-        async function advanceRound() {
-            if (!state.isAdmin) return;
-            const roomRef = db.doc(`artifacts/${appId}/public/data/rooms/${state.roomId}`);
-
-            // איפוס מפת ההצבעות כדי שהווי הירוק יעלם לכולם בסיבוב הבא
-            await roomRef.update({
-                round: state.round + 1,
-                votes: {}
-            });
+        function advanceRound() {
+            if (state.round >= scenarios.length - 1) {
+                showScreen('screen-finish');
+            } else {
+                state.round++;
+                startRound();
+            }
         }
 
         function restartGame() {
-            // איפוס המצב המקומי וחזרה ללובי
-            state.round = -1;
-            state.roomId = "";
-            state.isAdmin = false;
-            state.voted = false;
+            state.round = 0;
+            state.currentTurn = 1;
             state.selectedId = null;
-            state.processedVotes.clear();
-
-            showScreen('screen-lobby');
-        }
-
-        function copyRoomCode() {
-            const el = document.createElement('textarea');
-            el.value = state.roomId;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            const btn = document.querySelector('.btn-outline');
-            const original = btn.innerText;
-            btn.innerText = "הועתק! ✅";
-            setTimeout(() => btn.innerText = original, 2000);
+            state.votes = { 1: null, 2: null };
+            
+            document.getElementById('input-p1').value = "";
+            document.getElementById('input-p2').value = "";
+            showScreen('screen-login');
         }
 
         function showScreen(id) {
